@@ -13,6 +13,16 @@ angular.module('angular-growl').directive('growl', [
       template: '<div class="growl">' + '\t<div class="growl-item alert" ng-repeat="message in messages" ng-class="computeClasses(message)">' + '\t\t<button type="button" class="close" ng-click="deleteMessage(message)">&times;</button>' + '       <div ng-switch="message.enableHtml">' + '           <div ng-switch-when="true" ng-bind-html="message.text"></div>' + '           <div ng-switch-default ng-bind="message.text"></div>' + '       </div>' + '\t</div>' + '</div>',
       replace: false,
       scope: true,
+      		link: function(scope, element, attrs) {
+			element.on('click', function(event) {
+				console.log(event);
+
+				if(event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
+					console.log("Closing Message");
+					scope.messages = [];
+				}
+			});
+		},
       controller: [
         '$scope',
         '$timeout',
