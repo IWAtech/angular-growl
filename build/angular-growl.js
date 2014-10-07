@@ -62,7 +62,9 @@ angular.module('angular-growl').directive('growl', [
               'alert-error': message.severity === 'error',
               'alert-danger': message.severity === 'error',
               'alert-info': message.severity === 'info',
-              'alert-warning': message.severity === 'warn'
+              'alert-warning': message.severity === 'warn',
+              'alert-info': message.severity === 'update-broadcast',
+              'update-broadcast': message.severity === 'update-broadcast'
             };
           };
         }
@@ -147,6 +149,9 @@ angular.module('angular-growl').provider('growl', function () {
       function addInfoMessage(text, config) {
         sendMessage(text, config, 'info');
       }
+      function addUpdateBroadcastMessage(text, config) {
+        sendMessage(text, config, 'update-broadcast');
+      }
       function addSuccessMessage(text, config) {
         sendMessage(text, config, 'success');
       }
@@ -188,6 +193,7 @@ angular.module('angular-growl').provider('growl', function () {
         addErrorMessage: addErrorMessage,
         addInfoMessage: addInfoMessage,
         addSuccessMessage: addSuccessMessage,
+        addUpdateBroadcastMessage: addUpdateBroadcastMessage,
         addServerMessages: addServerMessages,
         onlyUnique: onlyUnique,
         deleteInfoMessage: deleteInfoMessage
