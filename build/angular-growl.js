@@ -61,9 +61,8 @@ angular.module('angular-growl').directive('growl', [
               'alert-success': message.severity === 'success',
               'alert-error': message.severity === 'error',
               'alert-danger': message.severity === 'error',
-              'alert-info': message.severity === 'info',
+              'alert-info': message.severity === 'info' || message.severity === 'update-broadcast',
               'alert-warning': message.severity === 'warn',
-              'alert-info': message.severity === 'update-broadcast',
               'update-broadcast': message.severity === 'update-broadcast'
             };
           };
