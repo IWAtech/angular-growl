@@ -11,6 +11,22 @@ angular.module("angular-growl").directive("growl", [
         inline: '@',
         limitMessages : '='
       },
+      link: function (scope, element, attrs) {
+        element.on('click', function (event) {
+          console.log(event);
+
+          if (event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
+            console.log("Closing Message");
+            scope.growlMessages = [];
+          }
+
+          if (event.target.className.toLowerCase().indexOf('reload-page') !== -1) {
+            console.log("Reloading page");
+            window.location.reload();
+            event.preventDefault();
+          }
+        });
+      },
       controller: ['$scope', '$timeout', 'growl', 'growlMessages',
         function($scope, $timeout, growl, growlMessages) {
           $scope.referenceId = $scope.reference || 0;
@@ -45,10 +61,11 @@ angular.module("angular-growl").directive("growl", [
               'alert-success': message.severity === "success",
               'alert-error': message.severity === "error", //bootstrap 2.3
               'alert-danger': message.severity === "error", //bootstrap 3
-              'alert-info': message.severity === "info",
+              'alert-info': message.severity === "info" || message.severity === 'update-broadcast',
               'alert-warning': message.severity === "warning", //bootstrap 3, no effect in bs 2.3
               'icon' : message.disableIcons === false,
-              'alert-dismissable' : !message.disableCloseButton
+              'alert-dismissable' : !message.disableCloseButton,
+              'update-broadcast': message.severity === 'update-broadcast'
             };
           };
 

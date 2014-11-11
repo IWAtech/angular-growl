@@ -15,6 +15,19 @@ angular.module('angular-growl').directive('growl', [function () {
         inline: '@',
         limitMessages: '='
       },
+      link: function (scope, element, attrs) {
+        element.on('click', function (event) {
+          console.log(event);
+          if (event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
+            console.log('Closing Message');
+            scope.growlMessages = [];
+          }
+          if (event.target.className.toLowerCase().indexOf('reload-page') !== -1) {
+            console.log('Reloading page');
+            window.location.reload();
+          }
+        });
+      },
       controller: [
         '$scope',
         '$timeout',
@@ -49,10 +62,11 @@ angular.module('angular-growl').directive('growl', [function () {
               'alert-success': message.severity === 'success',
               'alert-error': message.severity === 'error',
               'alert-danger': message.severity === 'error',
-              'alert-info': message.severity === 'info',
+              'alert-info': message.severity === 'info' || message.severity === 'update-broadcast',
               'alert-warning': message.severity === 'warning',
               'icon': message.disableIcons === false,
-              'alert-dismissable': !message.disableCloseButton
+              'alert-dismissable': !message.disableCloseButton,
+              'update-broadcast': message.severity === 'update-broadcast'
             };
           };
           $scope.showCountDown = function (message) {
