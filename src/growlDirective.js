@@ -13,8 +13,8 @@ angular.module("angular-growl").directive("growl", [
       },
       link: function (scope, element, attrs) {
         element.on('click', function (event) {
-          console.log(event);
-
+          //console.log(event);
+	  event.preventDefault();
           if (event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
             console.log("Closing Message");
             scope.growlMessages = [];
