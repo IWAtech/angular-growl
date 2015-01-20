@@ -1,5 +1,5 @@
 /**
- * angular-growl-v2 - v0.7.5 - 2015-01-08
+ * angular-growl-v2 - v0.7.7 - 2015-01-20
  * http://janstevens.github.io/angular-growl-2
  * Copyright (c) 2015 Marco Rinck,Jan Stevens; Licensed MIT
  */
@@ -19,7 +19,7 @@ angular.module('angular-growl').directive('growl', [function () {
         element.on('click', function (event) {
           if (event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
             console.log('Closing Message');
-            scope.growlMessages = [];
+            scope.growlMessages.deleteAllMessages();
           }
           if (event.target.className.toLowerCase().indexOf('reload-page') !== -1) {
             console.log('Reloading page');
@@ -474,6 +474,13 @@ angular.module('angular-growl').service('growlMessages', [
       if (typeof message.onclose === 'function') {
         message.onclose();
       }
+    };
+    this.deleteAllMessages = function (message) {
+      _.each(this.directives, function (directive) {
+        if (directive.messages && directive.messages.length) {
+          directive.messages.splice(0, directive.messages.length);
+        }
+      });
     };
   }
 ]);

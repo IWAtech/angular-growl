@@ -15,7 +15,7 @@ angular.module("angular-growl").directive("growl", [
         element.on('click', function (event) {
           if (event.target.className.toLowerCase().indexOf('close-notification') !== -1) {
             console.log("Closing Message");
-            scope.growlMessages = [];
+            scope.growlMessages.deleteAllMessages();
           }
 
           if (event.target.className.toLowerCase().indexOf('reload-page') !== -1) {

@@ -91,4 +91,12 @@ angular.module("angular-growl").service("growlMessages", ['$sce', '$timeout', fu
       message.onclose();
     }
   };
+
+  this.deleteAllMessages = function(message) {
+    _.each(this.directives, function(directive) {
+       if(directive.messages && directive.messages.length) {
+         directive.messages.splice(0, directive.messages.length);
+       }
+    })
+  }
 }]);
